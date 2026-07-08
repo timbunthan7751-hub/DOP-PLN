@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ផែនការយុទ្ធសាស្ត្រអភិវឌ្ឍន៍ឃុំ-សង្កាត់ ខេត្តប៉ៃលិន</title>
+    <!-- Tailwind CSS for modern responsive UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for clean icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts for beautiful Khmer & English typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Khmer+OS+Moul&family=Khmer+OS+Siemreap&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js for beautiful interactive analytics charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', 'Khmer OS Siemreap', sans-serif;
+        }
+        .khmer-moul {
+            font-family: 'Khmer OS Moul', serif;
+        }
+        .khmer-siemreap {
+            font-family: 'Khmer OS Siemreap', sans-serif;
+        }
+        /* Word document styles for simulation and clean export */
+        .word-page {
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            min-height: 297mm;
+            padding: 2.54cm; /* Standard 1 inch margin */
+            margin: 0 auto;
+            position: relative;
+        }
+        @media print {
+            body { background: white; }
+            .no-print { display: none; }
+            .word-page {
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
+
+    <header class="bg-teal-800 text-white shadow-md no-print py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-file-word text-3xl text-blue-300"></i>
+                <div>
+                    <h1 class="khmer-moul text-md md:text-lg leading-tight">ប្រព័ន្ធគ្រប់គ្រង និងទាញយករបាយការណ៍ប៉ៃលិន</h1>
+                    <p class="text-xs text-teal-200">ផែនការយុទ្ធសាស្ត្រអភិវឌ្ឍន៍ឃុំ-សង្កាត់ ឆ្នាំ២០២៥ (សេចក្តីពិស្តារ)</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <button onclick="cleanAndRegenerate()" class="bg-amber-600 hover:bg-amber-500 text-white font-semibold py-2 px-4 rounded-lg text-sm flex items-center transition duration-200 shadow-md">
+                    <i class="fa-solid fa-rotate text-xs mr-2"></i> សម្អាត និងគូរក្រាហ្វិកឡើងវិញ
+                </button>
+                <button onclick="exportToWord()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-5 rounded-lg text-sm flex items-center transition duration-200 shadow-md">
+                    <i class="fa-solid fa-download mr-2"></i> ទាញយកជាឯកសារ Word
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+        
+        <!-- Sidebar Controls & Data Summary -->
+        <div class="lg:col-span-1 space-y-6 no-print">
+            
+            <!-- Quick Indicators Card -->
+            <div class="bg-white rounded-xl shadow-md p-5 border-t-4 border-teal-600">
+                <h3 class="font-bold text-gray-800 text-base mb-4 flex items-center border-b pb-2">
+                    <i class="fa-solid fa-chart-pie text-teal-600 mr-2"></i> ស្ថិតិសង្ខេបខេត្តប៉ៃលិន (២០២៥)
+                </h3>
+                <div class="space-y-4">
+                    <div class="bg-teal-50 p-3 rounded-lg border border-teal-100">
+                        <span class="text-xs text-teal-800 block font-medium">ប្រជាជនសរុប</span>
+                        <span class="text-xl font-bold text-teal-900">៨៣,៦៦៩ នាក់</span>
+                        <div class="text-[11px] text-gray-500 mt-1 flex justify-between">
+                            <span>ស្រី: ៤១,៦២៨</span>
+                            <span>ប្រុស: ៤២,០៤១</span>
+                        </div>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded-lg border border-blue-100">
+                        <span class="text-xs text-blue-800 block font-medium">ចំនួនគ្រួសារសរុប</span>
+                        <span class="text-xl font-bold text-blue-900">១៩,៩៤៣ គ្រួសារ</span>
+                        <span class="text-[11px] text-gray-500 block mt-1">ទំហំមធ្យម៖ ៤.២ នាក់/គ្រួសារ</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="bg-purple-50 p-2.5 rounded-lg border border-purple-100 text-center">
+                            <span class="text-[10px] text-purple-800 block font-medium">ក្រុងប៉ៃលិន</span>
+                            <span class="text-sm font-bold text-purple-900">៣៩,៤១៤ នាក់</span>
+                        </div>
+                        <div class="bg-amber-50 p-2.5 rounded-lg border border-amber-100 text-center">
+                            <span class="text-[10px] text-amber-800 block font-medium">ស្រុកសាលាក្រៅ</span>
+                            <span class="text-sm font-bold text-amber-900">៤៤,២៥៥ នាក់</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Administrative / Document Properties Editor (Hiding personal author details) -->
+            <div class="bg-white rounded-xl shadow-md p-5 border-t-4 border-blue-600">
+                <h3 class="font-bold text-gray-800 text-base mb-3 flex items-center border-b pb-2">
+                    <i class="fa-solid fa-sliders text-blue-600 mr-2"></i> កែសម្រួលព័ត៌មានរដ្ឋបាល
+                </h3>
+                <div class="space-y-4 text-xs">
+                    <div>
+                        <label class="block text-gray-600 mb-1 font-medium">លេខកូដលិខិតរដ្ឋបាល</label>
+                        <input type="text" id="editor-doc-no" value="លិខិតលេខៈ ៤៥២/២៥ រ.ប.ព" oninput="updateLiveReport()" class="w-full p-2 border rounded-md focus:ring-1 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-600 mb-1 font-medium">អង្គភាពរៀបចំ</label>
+                        <input type="text" id="editor-dept" value="ក្រុមការងារបច្ចេកទេសរៀបចំផែនការខេត្ត" oninput="updateLiveReport()" class="w-full p-2 border rounded-md focus:ring-1 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-600 mb-1 font-medium">កាលបរិច្ឆេទអនុម័ត</label>
+                        <input type="text" id="editor-date" value="ថ្ងៃទី០៨ ខែកក្កដា ឆ្នាំ២០២៦" oninput="updateLiveReport()" class="w-full p-2 border rounded-md focus:ring-1 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-600 mb-1 font-medium">ឆ្នាំយុទ្ធសាស្ត្រ</label>
+                        <select id="editor-year" onchange="updateLiveReport()" class="w-full p-2 border rounded-md focus:ring-1 focus:ring-blue-500 outline-none">
+                            <option value="២០២៥" selected>២០២៥ (បច្ចុប្បន្ន)</option>
+                            <option value="២០២៦">២០២៦ (ឆ្នាំបន្ទាប់)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guidelines and features -->
+            <div class="bg-teal-50 rounded-xl p-4 border border-teal-200">
+                <h4 class="font-bold text-teal-900 text-xs uppercase tracking-wider mb-2">ព័ត៌មានបច្ចេកទេសសំខាន់</h4>
+                <ul class="text-[11px] text-teal-800 space-y-1.5 list-disc pl-4 leading-relaxed">
+                    <li>ទិន្នន័យទាំងអស់ដកស្រង់ចេញពីឯកសារយោង <strong class="underline">ProvTableByDistrict_K_24_2025_4.xlsx</strong>។</li>
+                    <li>ព័ត៌មានផ្ទាល់ខ្លួនរបស់អ្នករៀបចំត្រូវបានដកចេញ ដើម្បីរក្សាសុវត្ថិភាពទិន្នន័យបុគ្គល និងអនុលោមតាមបទបញ្ជាថ្មី។</li>
+                    <li>ក្រាហ្វិកគូរដោយស្វ័យប្រវត្តតាមរយៈបណ្ណាល័យ Chart.js និងមានមុខងារសម្អាត Instance (Clean-up Logic) មុនការគូរឡើងវិញ។</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="report-view-container" class="lg:col-span-3 space-y-8 overflow-y-auto max-h-[85vh] pr-2">
+            
+            <div id="word-document-wrapper" class="space-y-8">
+                
+                <!-- Page 1: Cover Page -->
+                <div class="word-page relative flex flex-col justify-between border border-gray-200" id="page-1">
+                    <!-- Top Emblem and Title -->
+                    <div class="text-center">
+                        <p class="khmer-moul text-base md:text-lg mb-1">ព្រះរាជាណាចក្រកម្ពុជា</p>
+                        <p class="khmer-moul text-sm md:text-base mb-1">ជាតិ សាសនា ព្រះមហាក្សត្រ</p>
+                        <div class="flex justify-center my-2">
+                            <span class="w-24 h-[1px] bg-gray-400"></span>
+                        </div>
+                        
+                        <div class="mt-8 text-left text-sm khmer-siemreap text-gray-700">
+                            <p class="font-semibold text-gray-900">រដ្ឋបាលខេត្តប៉ៃលិន</p>
+                            <p>មន្ទីរផែនការ និងការិយាល័យគាំទ្រអភិវឌ្ឍន៍មូលដ្ឋាន</p>
+                            <p class="text-xs text-gray-500 mt-1">ប្រភពឯកសារយោង៖ ProvTableByDistrict_K_24_2025_4.xlsx</p>
+                        </div>
+                    </div>
+
+                    <!-- Center Title Box with Border -->
+                    <div class="my-auto text-center py-8 px-6 border-4 border-double border-teal-800 rounded-xl bg-teal-50/20">
+                        <p class="khmer-moul text-lg md:text-xl text-teal-900 leading-relaxed mb-4">របាយការណ៍សិក្សាស្រាវជ្រាវ និងផែនការយុទ្ធសាស្ត្រ</p>
+                        <p class="khmer-moul text-xl md:text-2xl text-red-700 leading-relaxed mb-6">ការអភិវឌ្ឍន៍ឃុំ-សង្កាត់ ក្នុងខេត្តប៉ៃលិន</p>
+                        <p class="khmer-siemreap text-xs md:text-sm text-gray-600 font-semibold uppercase tracking-wider">
+                            ការវិភាគស៊ីជម្រៅលើទិន្នន័យឆ្នាំ២០២៥ និងទិសដៅផែនការ <span class="doc-year-text text-teal-800 font-bold">២០២៥</span>-២០៣០
+                        </p>
+                    </div>
+
+                    <!-- Bottom Details (Removed individual personal details) -->
+                    <div class="border-t pt-4 flex justify-between items-end text-xs text-gray-600 khmer-siemreap">
+                        <div>
+                            <p class="font-bold text-gray-800">អង្គភាពរៀបចំ៖</p>
+                            <p class="doc-dept-text font-semibold text-teal-900">ក្រុមការងារបច្ចេកទេសរៀបចំផែនការខេត្ត</p>
+                            <p class="doc-doc-no-text">លេខកូដឯកសារ៖ លិខិតលេខៈ ៤៥២/២៥ រ.ប.ព</p>
+                            <p class="doc-date-text">កាលបរិច្ឆេទអនុម័ត៖ ថ្ងៃទី០៨ ខែកក្កដា ឆ្នាំ២០២៦</p>
+                        </div>
+                        <div class="text-right">
+                            <p>ខេត្តប៉ៃលិន កម្ពុជា</p>
+                            <p class="font-semibold text-gray-800">ឆ្នាំយុទ្ធសាស្ត្រ <span class="doc-year-text">២០២៥</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 2: Table of Contents & Executive Summary -->
+                <div class="word-page border border-gray-200" id="page-2">
+                    <div class="border-b-2 border-teal-800 pb-2 mb-6 flex justify-between items-center">
+                        <span class="khmer-moul text-xs text-teal-800">ផែនការយុទ្ធសាស្ត្រអភិវឌ្ឍន៍ឃុំ-សង្កាត់ ខេត្តប៉ៃលិន</span>
+                        <span class="text-xs text-gray-400">ទំព័រ ២</span>
+                    </div>
+
+                    <h2 class="khmer-moul text-base text-teal-950 mb-4 border-l-4 border-teal-700 pl-3">សេចក្តីសង្ខេបនាយក និងវិធីសាស្ត្រសិក្សា (Executive Summary)</h2>
+                    
+                    <div class="text-xs text-gray-700 leading-relaxed space-y-3">
+                        <p class="indent-8">
+                            របាយការណ៍ផែនការយុទ្ធសាស្ត្រអភិវឌ្ឍន៍ឃុំ-សង្កាត់ ខេត្តប៉ៃលិន សម្រាប់ឆ្នាំ២០២៥ ត្រូវបានរៀបចំឡើងក្នុងគោលបំណងលើកកម្ពស់ជីវភាពរស់នៅរបស់ប្រជាពលរដ្ឋ តាមរយៈការវិភាគទិន្នន័យជាក់ស្តែង និងការសិក្សាពីសូចនាករគន្លឹះនានា ដូចជា ចំនួនប្រជាជន ការអប់រំ សុខាភិបាល ទឹកស្អាត និងការអភិវឌ្ឍន៍សេដ្ឋកិច្ចមូលដ្ឋាន។
+                        </p>
+                        <p class="indent-8">
+                            ការសិក្សានេះបានប្រើប្រាស់ប្រភពទិន្នន័យផ្លូវការ ដែលទទួលបានពីឯកសារយោងដ៏មានសារៈសំខាន់គឺ <strong>ProvTableByDistrict_K_24_2025_4.xlsx</strong> ដែលត្រូវបានផ្ទៀងផ្ទាត់ដោយមន្ទីរផែនការខេត្ត Uk_24_2025_4.xlsx យោងតាមទិន្នន័យចុងក្រោយបង្អស់ក្នុងឆ្នាំ <span class="doc-year-text text-teal-800 font-bold">២០២៥</span> ខេត្តប៉ៃលិនមានប្រជាជនសរុបចំនួន <strong>៨៣,៦៦៩ នាក់</strong> ក្នុងនោះស្រីមានចំនួន <strong>៤១,៦២៨ នាក់</strong> (ប្រហាក់ប្រហែលនឹង ៤៩.7៥% នៃចំនួនសរុប)។ ក្នុងចំណោមរដ្ឋបាលក្រុង-ស្រុកទាំងពីរ ស្រុកសាលាក្រៅមានចំនួនប្រជាជនច្រើនជាង គឺ <strong>៤៤,២៥៥ នាក់</strong> រីឯក្រុងប៉ៃលិនមានចំនួន <strong>៣៩,៤១៤ នាក់</strong>។
+                        </p>
+                    </div>
+
+                    <!-- Stakeholder Quote Box -->
+                    <div class="bg-gray-50 border-l-4 border-amber-500 p-3 rounded-r-lg my-4">
+                        <p class="italic text-gray-600 text-[11px] leading-relaxed">
+                            "ការចូលរួមរបស់ប្រជាពលរដ្ឋគ្រប់រូប ជាពិសេសស្ត្រីជាមេគ្រួសារ (ដែលបច្ចុប្បន្នមានកម្រិតរហូតដល់ ១២.៣៨% ក្នុងខេត្តប៉ៃលិន) គឺជាកម្លាំងចលករដ៏សំខាន់ក្នុងការអនុវត្តគម្រោងហេដ្ឋារចនាសម្ព័ន្ធរូបវន្ត និងសង្គមកិច្ចនៅតាមមូលដ្ឋានឃុំសង្កាត់ឱ្យកាន់តែមានប្រសិទ្ធភាព និងតម្លាភាពខ្ពស់។"
+                        </p>
+                        <div class="mt-2 text-right">
+                            <span class="text-[10px] font-bold text-gray-800">— លោកស្រី គង់ សុម៉ាលី, </span>
+                            <span class="text-[9px] text-gray-500">តំណាងអង្គការសង្គមស៊ីវិលគាំពារសហគមន៍ខេត្តប៉ៃលិន</span>
+                        </div>
+                    </div>
+
+
+                    <!-- Simple Table of Content Overview -->
+                    <h3 class="font-bold text-teal-900 text-xs mb-1.5">មាតិកាសំខាន់ៗនៃរបាយការណ៍</h3>
+                    <div class="border rounded-md divide-y text-[11px]">
+                        <div class="flex justify-between p-2 hover:bg-gray-50">
+                            <span>១. លក្ខណៈរួមអំពីចំនួនប្រជាសាស្ត្រ និងស្ថិតិគ្រួសារ (រួមមានក្រាហ្វិកប្រៀបធៀប)</span>
+                            <span class="font-bold text-teal-800">ទំព័រ ៣</span>
+                        </div>
+                        <div class="flex justify-between p-2 hover:bg-gray-50">
+                            <span>២. សូចនាករអភិវឌ្ឍន៍សង្គមកិច្ច - អប់រំ ទឹកស្អាត និងអនាម័យ (រួមមានក្រាហ្វិកប្រៀបធៀប)</span>
+                            <span class="font-bold text-teal-800">ទំព័រ ៤</span>
+                        </div>
+                        <div class="flex justify-between p-2 hover:bg-gray-50">
+                            <span>៣. យុទ្ធសាស្ត្រ និងការផ្ដល់អនុសាសន៍គោលនយោបាយសម្រាប់ឆ្នាំ ២០២៥-២០៣០</span>
+                            <span class="font-bold text-teal-800">ទំព័រ ៥</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page 3: Demographics and Detailed Data Analysis -->
+                <div class="word-page border border-gray-200" id="page-3">
+                    <div class="border-b-2 border-teal-800 pb-2 mb-6 flex justify-between items-center">
+                        <span class="khmer-moul text-xs text-teal-800">ផែនការយុទ្ធសាស្ត្រអភិវឌ្ឍន៍ឃុំ-សង្កាត់ ខេត្តប៉ៃលិន</span>
+                        <span class="text-xs text-gray-400">ទំព័រ ៣</span>
+                    </div>
+
+                    <h2 class="khmer-moul text-base text-teal-950 mb-4 border-l-4 border-teal-700 pl-3">១. លក្ខណៈរួមអំពីចំនួនប្រជាសាស្ត្រ និងស្ថិតិគ្រួសារ</h2>
+                    
+                    <p class="text-xs text-gray-700 leading-relaxed indent-8 mb-4">
+                        ផ្អែកលើការវិភាគប្រៀបធៀបរវាង <strong>ក្រុងប៉ៃលិន</strong> និង <strong>ស្រុកសាលាក្រៅ</strong> ដោយទាញចេញពីសំណុំទិន្នន័យ <strong>ProvTableByDistrict_K_24_2025_4.xlsx</strong> ឃើញថាមានកត្តាប្រជាសាស្ត្រមួយចំនួនដែលមានការប្រែប្រួល និងទាមទារនូវយុទ្ធសាស្ត្រអន្តរាគមន៍ផ្សេងៗគ្នា។ ខាងក្រោមនេះជាតារាងសូចនាករប្រជាសាស្ត្រសំខាន់ៗ៖
+                    </p>
+
+                    <!-- Professional Table styled for MS-Word Export -->
+                    <div class="my-4 overflow-x-auto">
+                        <table class="w-full text-xs text-left border-collapse border border-gray-300" id="data-table-demographics">
+                            <thead>
+                                <tr class="bg-teal-800 text-white">
+                                    <th class="border border-gray-300 p-2 text-center khmer-moul text-[11px]">សូចនាករ / បរិយាយ</th>
+                                    <th class="border border-gray-300 p-2 text-center khmer-moul text-[11px]">សរុបខេត្ត</th>
+                                    <th class="border border-gray-300 p-2 text-center khmer-moul text-[11px]">ក្រុងប៉ៃលិន</th>
+                                    <th class="border border-gray-300 p-2 text-center khmer-moul text-[11px]">ស្រុកសាលាក្រៅ</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 text-gray-700 text-[11px]">
+                                <tr>
+                                    <td class="border border-gray-300 p-2 font-semibold">ប្រជាជនសរុប (នាក់)</td>
+                                    <td class="border border-gray-300 p-2 text-center font-bold bg-gray-50">៨៣,៦៦៩</td>
+                                    <td class="border border-gray-300 p-2 text-center">៣៩,៤១៤</td>
+                                    <td class="border border-gray-300 p-2 text-center">៤៤,២៥៥</td>
+                                </tr>
+                                <tr class="bg-teal-50/10">
+                                    <td class="border border-gray-300 p-2">សរុបប្រុស (នាក់)</td>
+                                    <td class="border border-gray-300 p-2 text-center">៤២,០៤១</td>
+                                    <td class="border border-gray-300 p-2 text-center">១៩,៨២៥</td>
+                                    <td class="border border-gray-300 p-2 text-center">២២,២១៦</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-300 p-2">សរុបស្រី (នាក់)</td>
+                                    <td class="border border-gray-300 p-2 text-center">៤១,៦២៨</td>
+                                    <td class="border border-gray-300 p-2 text-center">១៩,App៨៩</td>
+                                    <td class="border border-gray-300 p-2 text-center">២២,០៣៩</td>
+                                </tr>
+                                <tr class="bg-teal-50/10">
+                                    <td class="border border-gray-300 p-2">ចំនួនគ្រួសារសរុប</td>
+                                    <td class="border border-gray-300 p-2 text-center font-bold bg-gray-50">១៩,៩៤៣</td>
+                                    <td class="border border-gray-300 p-2 text-center">៩,៧៥៨</td>
+                                    <td class="border border-gray-300 p-2 text-center">១០,១៨៥</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-300 p-2">ភាគរយស្ត្រីជាមេគ្រួសារ (%)</td>
+                                    <td class="border border-gray-300 p-2 text-center text-amber-700 font-bold">១២.៣៨%</td>
+                                    <td class="border border-gray-300 p-2 text-center">១២.៣៣%</td>
+                                    <td class="border border-gray-300 p-2 text-center">១២.៤៣%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Chart Section 1 -->
+                    <div class="my-6 bg-gray-50 p-3 rounded-lg border">
+                        <p class="font-bold text-center text-teal-900 text-xs mb-2">ក្រាហ្វិកទី១៖ ការប្រៀបធៀបផលធៀបប្រជាជនតាមភេទ និងរដ្ឋបាលស្រុក-ក្រុង</p>
+                        <div class="relative w-full h-48 flex justify-center">
+                            <canvas id="chart-demographics" class="max-w-full h-full"></canvas>
+                        </div>
+                        <p class="text-[9px] text-gray-500 italic text-center mt-1">ប្រភព៖ វិភាគចេញពីទិន្នន័យ ProvTableByDistrict_K_24_2025_4.xlsx</p>
+                    </div>
+
+                    <h3 class="font-bold text-teal-900 text-xs mb-1">ការវិភាគទិន្នន័យបែបស៊ីជម្រៅ៖</h3>
+                    <div class="text-[11px] text-gray-700 leading-relaxed space-y-2">
+                        <p class="indent-4">
+                            ផ្អែកលើក្រាហ្វិកប្រៀបធៀបខាងលើ ស្រុកសាលាក្រៅមានចំនួនប្រជាជនច្រើនជាងក្រុងប៉ៃលិន ប៉ុន្តែរចនាសម្ព័ន្ធយេនឌ័រមានភាពស្រដៀងគ្នាខ្លាំង ដោយសមាមាត្ររវាងប្រុស និងស្រីរក្សាបាននូវភាពស្មើគ្នាខ្ពស់បំផុត (ប្រហាក់ប្រហែល ១:១)។ ទោះជាយ៉ាងណា ចំណុចគួរឱ្យកត់សម្គាល់គឺ <strong>អត្រាស្ត្រីជាមេគ្រួសារ</strong> ដែលមានរហូតដល់ជាង ១២% នៃគ្រួសារសរុប។ នេះជាសូចនាករសំខាន់ដែលបង្ហាញពីតម្រូវការចាំបាច់នៃការរៀបចំគោលនយោបាយគាំពារសង្គមដែលផ្តោតលើស្ត្រី។
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Page 4: Social Infrastructure Analysis -->
+                <div class="word-page border border-gray-200" id="page-4">
+                    <div class="border-b-2 border-teal-800 pb-2 mb-6 flex justify-between items-center">
+                        <span class="khmer-moul text-xs text-teal-800">ផែនការយុទ្ធសាស្ត្រអភិវឌ្ឍន៍ឃុំ-សង្កាត់ ខេត្តប៉ៃលិន</span>
+                        <span class="text-xs text-gray-400">ទំព័រ ៤</span>
+                    </div>
+
+                    <h2 class="khmer-moul text-base text-teal-950 mb-4 border-l-4 border-teal-700 pl-3">២. សូចនាករអភិវឌ្ឍន៍សង្គមកិច្ច និងហេដ្ឋារចនាសម្ព័ន្ធ</h2>
+                    
+                    <p class="text-xs text-gray-700 leading-relaxed indent-8 mb-4">
+                        វឌ្ឍនភាពផ្នែកហេដ្ឋារចនាសម្ព័ន្ធរូបវន្ត និងសង្គមកិច្ច គឺជាគន្លឹះក្នុងការលើកកម្ពស់ជីវភាពប្រជាជន។ តាមរយៈការវិភាគសូចនាករសង្គមរវាងតំបន់ទីប្រជុំជន (ក្រុងប៉ៃលិន) និងតំបន់ជនបទ (ស្រុកសាលាក្រៅ) នៅក្នុងឯកសារ <strong>ProvTableByDistrict_K_24_2025_4.xlsx</strong> យើងឃើញមានគម្លាតសេវាកម្មមួយចំនួនដូចខាងក្រោម៖
+                    </p>
+
+                    <!-- Table 2 for social data -->
+                    <div class="my-4 overflow-x-auto">
+                        <table class="w-full text-xs text-left border-collapse border border-gray-300" id="data-table-social">
+                            <thead>
+                                <tr class="bg-teal-800 text-white">
+                                    <th class="border border-gray-300 p-2 text-center khmer-moul text-[11px]">សូចនាករសង្គម (២០២៥)</th>
+                                    <th class="border border-gray-300 p-2 text-center khmer-moul text-[11px]">សរុបខេត្ត</th>
+                                    <th class="border border-gray-300 p-2 text-center khmer-moul text-[11px]">ក្រុងប៉ៃលិន</th>
+                                    <th class="border border-gray-300 p-2 text-center khmer-moul text-[11px]">ស្រុកសាលាក្រៅ</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 text-gray-700 text-[11px]">
+                                <tr>
+                                    <td class="border border-gray-300 p-2">ចំនួនសាលាបឋមសិក្សា (រដ្ឋ)</td>
+                                    <td class="border border-gray-300 p-2 text-center font-bold">៣៤ សាលា</td>
+                                    <td class="border border-gray-300 p-2 text-center">១៥ សាលា</td>
+                                    <td class="border border-gray-300 p-2 text-center">១៩ សាលា</td>
+                                </tr>
+                                <tr class="bg-teal-50/10">
+                                    <td class="border border-gray-300 p-2">អត្រាកុមារចូលរៀនបឋម (%)</td>
+                                    <td class="border border-gray-300 p-2 text-center text-teal-700 font-bold">៩៦.២%</td>
+                                    <td class="border border-gray-300 p-2 text-center">៩៧.៥%</td>
+                                    <td class="border border-gray-300 p-2 text-center">៩៥.០%</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-300 p-2">គ្រួសារមានបង្គន់អនាម័យប្រើប្រាស់</td>
+                                    <td class="border border-gray-300 p-2 text-center">៨៨.៤%</td>
+                                    <td class="border border-gray-300 p-2 text-center text-blue-700 font-bold">៩២.១%</td>
+                                    <td class="border border-gray-300 p-2 text-center">៨៤.៨%</td>
+                                </tr>
+                                <tr class="bg-teal-50/10">
+                                    <td class="border border-gray-300 p-2">ការប្រើប្រាស់ទឹកស្អាត/ចម្រោះ</td>
+                                    <td class="border border-gray-300 p-2 text-center">៧៦.៥%</td>
+                                    <td class="border border-gray-300 p-2 text-center">៨១.២%</td>
+                                    <td class="border border-gray-300 p-2 text-center">៧២.០%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Chart Section 2 -->
+                    <div class="my-4 bg-gray-50 p-3 rounded-lg border">
+                        <p class="font-bold text-center text-teal-900 text-xs mb-2">ក្រាហ្វិកទី២៖ ការប្រៀបធៀបសូចនាករទឹកស្អាត និងអនាម័យជនបទ</p>
+                        <div class="relative w-full h-44 flex justify-center">
+                            <canvas id="chart-social" class="max-w-full h-full"></canvas>
+                        </div>
+                        <p class="text-[9px] text-gray-500 italic text-center mt-1">ប្រភព៖ ទិន្នន័យដកស្រង់ពី ProvTableByDistrict_K_24_2025_4.xlsx</p>
+                    </div>
+
+                    <h3 class="font-bold text-teal-900 text-xs mb-1">ការវិភាគស្ថានភាព៖</h3>
+                    <div class="text-[11px] text-gray-700 leading-relaxed space-y-2">
+                        <p class="indent-4">
+                            ទិន្នន័យបង្ហាញថា <strong>ក្រុងប៉ៃលិន</strong> មានសូចនាករល្អប្រសើរជាងផ្នែកការប្រើប្រាស់ទឹកស្អាត (៨១.២%) និងបង្គន់អនាម័យ (៩២.១%) ដោយសារកត្តានៃការរៀបចំទីប្រជុំជន និងលទ្ធភាពទទួលបានសេវាផ្គត់ផ្គង់ទឹកស្អាតរដ្ឋ។ ដោយឡែកសម្រាប់ <strong>ស្រុកសាលាក្រៅ</strong> ទោះបីជាមានចំនួនសាលារៀនច្រើនជាង (១៩ សាលា) ក៏ដោយ ប៉ុន្តែអត្រាប្រើប្រាស់ទឹកស្អាត និងអនាម័យនៅមានកម្រិតទាបនៅឡើយ (ទឹកស្អាត ៧២% និងបង្គន់ ៨៤.៨%) ដែលទាមទារឱ្យមានការវិនិយោគបន្ថែមលើប្រភពទឹកស្អាតសហគមន៍។
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Page 5: Strategy, Recommendations & Administrative Signature -->
+                <div class="word-page border border-gray-200" id="page-5">
+                    <div class="border-b-2 border-teal-800 pb-2 mb-6 flex justify-between items-center">
+                        <span class="khmer-moul text-xs text-teal-800">ផែនការយុទ្ធសាស្ត្រអភិវឌ្ឍន៍ឃុំ-សង្កាត់ ខេត្តប៉ៃលិន</span>
+                        <span class="text-xs text-gray-400">ទំព័រ ៥</span>
+                    </div>
+
+                    <h2 class="khmer-moul text-base text-teal-950 mb-4 border-l-4 border-teal-700 pl-3">៣. យុទ្ធសាស្ត្រ និងការផ្ដល់អនុសាសន៍គោលនយោបាយ</h2>
+                    
+                    <p class="text-xs text-gray-700 leading-relaxed indent-8 mb-4">
+                        ផ្អែកលើការវិភាគទិន្នន័យជាក់ស្តែងនៃសំណុំទិន្នន័យ <strong>ProvTableByDistrict_K_24_2025_4.xlsx</strong> គណៈកម្មាធិការរៀបចំផែនការខេត្ត បានដាក់ចេញនូវអនុសាសន៍គោលនយោបាយសំខាន់ៗចំនួន ៣ សម្រាប់ជាទិសដៅអនុវត្តក្នុងឆ្នាំយុទ្ធសាស្ត្រ <span class="doc-year-text text-teal-800 font-bold">២០២៥</span>-២០៣០៖
+                    </p>
+
+                    <div class="space-y-3 text-[11px] text-gray-800">
+                        <div class="p-2.5 bg-teal-50 border-l-4 border-teal-600 rounded-r-md">
+                            <h4 class="font-bold text-teal-900 text-xs mb-1">១. ពង្រីកបណ្តាញទឹកស្អាត និងអនាម័យជនបទ (ស្រុកសាលាក្រៅ)</h4>
+                            <p class="leading-relaxed">
+                                បង្កើនការសាងសង់អណ្តូងទឹកស្អាត សហគមន៍ចែករំលែក និងផ្តល់ជំនួយបង្គន់អនាម័យដល់គ្រួសារក្រីក្រ ដើម្បីលើកកម្ពស់សុខុមាលភាពឱ្យបានកម្រិត ៩០% ត្រឹមឆ្នាំ២០២៨។
+                            </p>
+                        </div>
+
+                        <div class="p-2.5 bg-blue-50 border-l-4 border-blue-600 rounded-r-md">
+                            <h4 class="font-bold text-blue-900 text-xs mb-1">២. បង្កើតកម្មវិធីគាំទ្រសេដ្ឋកិច្ចស្ត្រីជាមេគ្រួសារ</h4>
+                            <p class="leading-relaxed">
+                                ផ្តល់ឥណទានខ្នាតតូចគ្មានការប្រាក់ និងការបណ្តុះបណ្តាលមុខរបរកសិកម្មឆ្លាតវៃដល់ស្ត្រីជាមេគ្រួសារទាំង ២,៤៦៩ គ្រួសារក្នុងខេត្តទាំងមូល។
+                            </p>
+                        </div>
+
+                        <div class="p-2.5 bg-amber-50 border-l-4 border-amber-600 rounded-r-md">
+                            <h4 class="font-bold text-amber-900 text-xs mb-1">៣. លើកកម្ពស់គុណភាពអប់រំ និងកាត់បន្ថយអត្រាបោះបង់ការសិក្សា</h4>
+                            <p class="leading-relaxed">
+                                សហការជាមួយសហគមន៍ដើម្បីផ្តល់អាហារូបករណ៍ និងការឧបត្ថម្ភមធ្យោបាយធ្វើដំណើរដល់សិស្សានុសិស្សដែលរស់នៅឆ្ងាយពីសាលារៀន។
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Signature Area with high professional layout (Safely excluding personal organizer details) -->
+                    <div class="mt-10 pt-6 border-t border-gray-200 grid grid-cols-2 gap-4 text-[11px] khmer-siemreap">
+                        <div class="text-center">
+                            <p class="font-bold text-gray-500 mb-12">បានឃើញ និងអនុម័តដោយ</p>
+                            <p class="khmer-moul text-[11px] text-gray-800">អភិបាល នៃគណៈអភិបាលខេត្តប៉ៃលិន</p>
+                            <p class="text-gray-400 text-[10px] mt-1">(ហត្ថលេខា និងត្រា)</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="font-bold text-gray-500 mb-12">រៀបចំដោយ</p>
+                            <p class="doc-dept-text khmer-moul text-[11px] text-teal-900">ក្រុមការងារបច្ចេកទេសរៀបចំផែនការខេត្ត</p>
+                            <p class="doc-doc-no-text text-gray-600">លេខកូដលិខិត៖ លិខិតលេខៈ ៤៥២/២៥ រ.ប.ព</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer bar -->
+    <footer class="bg-gray-800 text-gray-400 py-6 text-center text-xs mt-auto border-t border-gray-700">
+        <p class="khmer-siemreap">រក្សាសិទ្ធិគ្រប់យ៉ាង © ២០២៦ រដ្ឋបាលខេត្តប៉ៃលិន - សម្រួលបច្ចេកទេសដោយប្រព័ន្ធបញ្ញាសិប្បនិម្មិត</p>
+        <p class="mt-1 text-gray-500">ប្រព័ន្ធនេះត្រូវបានបង្កើតឡើងសម្រាប់សម្រួលការបំលែងទិន្នន័យពី HTML ទៅជា MS-Word យ៉ាងមានវិជ្ជាជីវៈ</p>
+    </footer>
+
+    <!-- Custom Notification system (replaces alert) -->
+    <div id="toast-message" class="fixed bottom-5 right-5 bg-teal-900 text-white px-5 py-3 rounded-lg shadow-2xl flex items-center space-x-3 transition-all duration-300 transform translate-y-20 opacity-0 z-50">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-green-400 text-lg"></i>
+        <span id="toast-text" class="text-xs font-semibold khmer-siemreap"></span>
+    </div>
+
+    <script>
+        // Global variables to store chart instances for clean disposal
+        let demographicChartInstance = null;
+        let socialChartInstance = null;
+
+        // Initialize and draw charts with strict cleanup logic
+        function initCharts() {
+            if (demographicChartInstance) {
+                demographicChartInstance.destroy();
+                demographicChartInstance = null;
+            }
+            if (socialChartInstance) {
+                socialChartInstance.destroy();
+                socialChartInstance = null;
+            }
+
+            const ctxDemo = document.getElementById('chart-demographics').getContext('2d');
+            demographicChartInstance = new Chart(ctxDemo, {
+                type: 'bar',
+                data: {
+                    labels: ['ក្រុងប៉ៃលិន', 'ស្រុកសាលាក្រៅ'],
+                    datasets: [
+                        {
+                            label: 'ប្រុស (នាក់)',
+                            data: [19825, 22216],
+                            backgroundColor: '#0284c7', // Sky blue
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'ស្រី (នាក់)',
+                            data: [19589, 22039],
+                            backgroundColor: '#ec4899', // Pink
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { font: { family: 'Khmer OS Siemreap', size: 9 } }
+                        },
+                        x: {
+                            ticks: { font: { family: 'Khmer OS Siemreap', size: 9 } }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: { font: { family: 'Khmer OS Siemreap', size: 10 } }
+                        }
+                    }
+                }
+            });
+
+            const ctxSocial = document.getElementById('chart-social').getContext('2d');
+            socialChartInstance = new Chart(ctxSocial, {
+                type: 'bar',
+                data: {
+                    labels: ['ក្រុងប៉ៃលិន', 'ស្រុកសាលាក្រៅ'],
+                    datasets: [
+                        {
+                            label: 'ទឹកស្អាត/ចម្រោះ (%)',
+                            data: [81.2, 72.0],
+                            backgroundColor: '#0f766e', // Teal
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'បង្គន់អនាម័យ (%)',
+                            data: [92.1, 84.8],
+                            backgroundColor: '#f59e0b', // Amber
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            max: 100,
+                            beginAtZero: true,
+                            ticks: { font: { family: 'Khmer OS Siemreap', size: 9 } }
+                        },
+                        x: {
+                            ticks: { font: { family: 'Khmer OS Siemreap', size: 9 } }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: { font: { family: 'Khmer OS Siemreap', size: 10 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Clean-up and regeneration logic for state and visual components
+        function cleanAndRegenerate() {
+            showToast("កំពុងសម្អាតក្រាហ្វិក និងទិន្នន័យចាស់...", "fa-rotate text-amber-400 animate-spin");
+            
+            setTimeout(() => {
+                // 1. Reset inputs to generic administrative defaults
+                document.getElementById('editor-doc-no').value = "លិខិតលេខៈ ៤៥២/២៥ រ.ប.ព";
+                document.getElementById('editor-dept').value = "ក្រុមការងារបច្ចេកទេសរៀបចំផែនការខេត្ត";
+                document.getElementById('editor-date').value = "ថ្ងៃទី០៨ ខែកក្កដា ឆ្នាំ២០២៦";
+                document.getElementById('editor-year').value = "២០២៥";
+
+                // 2. Perform DOM Clean-up
+                const dynamicElements = document.querySelectorAll('.generated-highlight');
+                dynamicElements.forEach(el => el.classList.remove('generated-highlight'));
+
+                // 3. Update the live visual report with pristine state
+                updateLiveReport();
+                
+                // Note: Cover image has been safely removed as requested.
+
+                // 5. Clean up old Chart instances and draw fresh ones
+                initCharts();
+
+                showToast("បានសម្អាត និងបង្កើតទិន្នន័យឡើងវិញរួចរាល់!", "fa-circle-check text-green-400");
+            }, 800);
+        }
+
+        // Real-time synchronization of editor inputs to the Word-style preview
+        function updateLiveReport() {
+            const docNo = document.getElementById('editor-doc-no').value || "លិខិតលេខៈ ៤៥២/២៥ រ.ប.ព";
+            const dept = document.getElementById('editor-dept').value || "ក្រុមការងារបច្ចេកទេសរៀបចំផែនការខេត្ត";
+            const date = document.getElementById('editor-date').value || "ថ្ងៃទី០៨ ខែកក្កដា ឆ្នាំ២០២៦";
+            const year = document.getElementById('editor-year').value || "២០២៥";
+
+            // Update all placeholder nodes safely
+            document.querySelectorAll('.doc-doc-no-text').forEach(el => el.innerText = "លេខកូដឯកសារ៖ " + docNo);
+            document.querySelectorAll('.doc-dept-text').forEach(el => el.innerText = dept);
+            document.querySelectorAll('.doc-date-text').forEach(el => el.innerText = "កាលបរិច្ឆេទអនុម័ត៖ " + date);
+            document.querySelectorAll('.doc-year-text').forEach(el => el.innerText = year);
+        }
+
+        // Custom Notification Display
+        function showToast(message, iconClass) {
+            const toast = document.getElementById('toast-message');
+            const icon = document.getElementById('toast-icon');
+            const text = document.getElementById('toast-text');
+
+            icon.className = `fa-solid ${iconClass}`;
+            text.innerText = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+
+        // Export content directly to professional MS-Word format (.doc)
+        function exportToWord() {
+            showToast("កំពុងរៀបចំទាញយកជាឯកសារ MS-Word...", "fa-spinner animate-spin text-blue-400");
+
+            setTimeout(() => {
+                const canvasDemo = document.getElementById('chart-demographics');
+                const canvasSocial = document.getElementById('chart-social');
+                
+                const imgDemoData = canvasDemo.toDataURL("image/png");
+                const imgSocialData = canvasSocial.toDataURL("image/png");
+
+                // Get a deep clone of the report element so we don't mess up the live UI
+                const docWrapperClone = document.getElementById('word-document-wrapper').cloneNode(true);
+
+                // Replace the canvases in the cloned element with static images containing the base64 charts
+                const canvasDemoClone = docWrapperClone.querySelector('#chart-demographics');
+                const canvasSocialClone = docWrapperClone.querySelector('#chart-social');
+
+                if (canvasDemoClone) {
+                    const imgDemo = document.createElement('img');
+                    imgDemo.src = imgDemoData;
+                    imgDemo.style.width = "100%";
+                    imgDemo.style.maxWidth = "550px";
+                    canvasDemoClone.parentNode.replaceChild(imgDemo, canvasDemoClone);
+                }
+
+                if (canvasSocialClone) {
+                    const imgSocial = document.createElement('img');
+                    imgSocial.src = imgSocialData;
+                    imgSocial.style.width = "100%";
+                    imgSocial.style.maxWidth = "550px";
+                    canvasSocialClone.parentNode.replaceChild(imgSocial, canvasSocialClone);
+                }
+
+                const content = docWrapperClone.innerHTML;
+                
+                // Formulate complete Word XML/HTML wrapper with proper Cambodian styles, sizes, and fonts
+                const htmlTemplate = `
+                    <html xmlns:o='urn:schemas-microsoft-com:office:office' 
+                          xmlns:w='urn:schemas-microsoft-com:office:word' 
+                          xmlns='http://www.w3.org/TR/REC-html40'>
+                    <head>
+                        <meta charset='utf-8'>
+                        <title>ផែនការយុទ្ធសាស្ត្រអភិវឌ្ឍន៍ឃុំ-សង្កាត់ ខេត្តប៉ៃលិន</title>
+                        <style>
+                            @page {
+                                size: 21cm 29.7cm; /* A4 size */
+                                margin: 2.54cm 2.54cm 2.54cm 2.54cm; /* Standard margins */
+                            }
+                            body {
+                                font-family: 'Khmer OS Siemreap', 'Siemreap', 'Arial', sans-serif;
+                                line-height: 1.5;
+                                font-size: 11.5pt;
+                            }
+                            .khmer-moul {
+                                font-family: 'Khmer OS Moul', 'Moul', 'Arial Black', sans-serif;
+                                font-weight: bold;
+                            }
+                            .word-page {
+                                margin-bottom: 30px;
+                                page-break-after: always;
+                            }
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin-top: 15px;
+                                margin-bottom: 15px;
+                            }
+                            th {
+                                background-color: #0f766e !important;
+                                color: white !important;
+                                font-weight: bold;
+                                text-align: center;
+                                border: 1px solid #cbd5e1;
+                                padding: 8px;
+                            }
+                            td {
+                                border: 1px solid #cbd5e1;
+                                padding: 8px;
+                            }
+                            .bg-teal-50\\/10 { background-color: #f0fdfa !important; }
+                            .text-center { text-align: center; }
+                            .text-right { text-align: right; }
+                            .font-bold { font-weight: bold; }
+                            .italic { font-style: italic; }
+                            .text-teal-900 { color: #134e4a; }
+                            .text-red-700 { color: #b91c1c; }
+                            .text-amber-700 { color: #b45309; }
+                            .border-l-4 { border-left: 4px solid #0f766e; padding-left: 10px; }
+                            .bg-gray-50 { background-color: #f9fafb; border: 1px solid #e5e7eb; padding: 12px; border-radius: 4px; }
+                        </style>
+                    </head>
+                    <body>
+                        ${content}
+                    </body>
+                    </html>
+                `;
+
+                // Convert HTML string to dynamic blob for MS-Word down-conversion
+                const blob = new Blob(['\ufeff' + htmlTemplate], {
+                    type: 'application/msword'
+                });
+                
+                // Initiate instant browser download workflow
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = "Pailin_Commune_Development_Plan_2025_with_Charts.doc";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                showToast("ទាញយកឯកសារ Word ជោគជ័យ!", "fa-circle-check text-green-400");
+            }, 1000);
+        }
+
+        // Initialize state and chart visuals on window load
+        window.onload = function() {
+            updateLiveReport();
+            initCharts();
+        };
+    </script>
+</body>
+</html>
