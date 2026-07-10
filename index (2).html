@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>វិភាគស៊ីជម្រៅលើសូចនាករគន្លឹះខេត្តប៉ៃលិន</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts for Khmer Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Content:wght@400;700&family=Koulen&family=Siemreap&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Siemreap', sans-serif;
+            background-color: #f8fafc;
+        }
+        .khmer-moul {
+            font-family: 'Koulen', sans-serif;
+            letter-spacing: 0.03em;
+        }
+        .content-font {
+            font-family: 'Content', sans-serif;
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col bg-slate-50">
+
+    <!-- Header Banner -->
+    <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-950 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="bg-white/10 p-2.5 rounded-xl border border-white/20">
+                    <i class="fa-solid fa-chart-line text-3xl text-amber-400"></i>
+                </div>
+                <div>
+                    <h1 class="khmer-moul text-xl md:text-2xl text-amber-400 tracking-wider">របាយការណ៍វិភាគស៊ីជម្រៅលើសូចនាករគន្លឹះ (KPIs)</h1>
+                    <p class="text-xs font-light text-slate-300 mt-1">ផែនការយុទ្ធសាស្ត្រអភិវឌ្ឍន៍ខេត្តប៉ៃលិន (២០២៥-២០៣០) • ទិន្នន័យវិទ្យាសាស្ត្រជាក់ស្តែង</p>
+                </div>
+            </div>
+            <div>
+                <button onclick="exportFullReport()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-5 py-2.5 rounded-xl shadow-md flex items-center gap-2 transition-all duration-300">
+                    <i class="fa-solid fa-file-word text-lg"></i>
+                    <span>ទាញយករបាយការណ៍ជា MS-Word</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left Panel: Interactive Controller -->
+        <div class="lg:col-span-4 flex flex-col gap-6">
+            
+            <!-- Key Metric Cards -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+                <h3 class="khmer-moul text-blue-900 text-sm mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-database"></i> ទិន្នន័យរួមទូទាំងខេត្ត (២០២៥)
+                </h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                        <span class="text-[11px] text-slate-500 block">ប្រជាជនសរុប</span>
+                        <span class="text-lg font-bold text-blue-900">៨៣,៦៦៩ នាក់</span>
+                    </div>
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                        <span class="text-[11px] text-slate-500 block">កម្លាំងពលកម្ម (១៨-៦០ឆ្នាំ)</span>
+                        <span class="text-lg font-bold text-emerald-600">៥២.៥២%</span>
+                    </div>
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                        <span class="text-[11px] text-slate-500 block">អត្រាបន្ទុកសរុប</span>
+                        <span class="text-lg font-bold text-red-500">៩០.៣៨%</span>
+                    </div>
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                        <span class="text-[11px] text-slate-500 block">ស្ត្រីជាសមាជិកក្រុមប្រឹក្សា</span>
+                        <span class="text-lg font-bold text-purple-600">៣០.៧៧%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategic Indicators Navigation -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+                <h3 class="khmer-moul text-blue-900 text-sm mb-3">ជ្រើសរើសសូចនាករវិភាគ</h3>
+                <div class="space-y-2">
+                    <button onclick="scrollToSection('sec-demographics')" class="w-full text-left px-4 py-3 rounded-xl text-xs font-medium hover:bg-slate-50 border border-slate-100 flex items-center gap-3 transition-all">
+                        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                        <span>១. ប្រជាសាស្ត្រ និងរចនាសម្ព័ន្ធអាយុ</span>
+                    </button>
+                    <button onclick="scrollToSection('sec-gender')" class="w-full text-left px-4 py-3 rounded-xl text-xs font-medium hover:bg-slate-50 border border-slate-100 flex items-center gap-3 transition-all">
+                        <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                        <span>២. សមភាពយេនឌ័រ និងភាពជាអ្នកដឹកនាំ</span>
+                    </button>
+                    <button onclick="scrollToSection('sec-disaster')" class="w-full text-left px-4 py-3 rounded-xl text-xs font-medium hover:bg-slate-50 border border-slate-100 flex items-center gap-3 transition-all">
+                        <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                        <span>៣. មហន្តរាយធម្មជាតិ និងសេវាបរិស្ថាន</span>
+                    </button>
+                    <button onclick="scrollToSection('sec-budget')" class="w-full text-left px-4 py-3 rounded-xl text-xs font-medium hover:bg-slate-50 border border-slate-100 flex items-center gap-3 transition-all">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span>៤. ម៉ាទ្រីសវិភាគប្រសិទ្ធភាពថវិកា</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Data Source Note -->
+            <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 text-xs text-blue-950 leading-relaxed">
+                <p class="font-bold mb-1"><i class="fa-solid fa-circle-info"></i> ចំណាំបច្ចេកទេស៖</p>
+                <p class="content-font text-justify">
+                    រាល់ទិន្នន័យ ភាគរយ និងតួលេខគណនាទាំងអស់ត្រូវបានដកស្រង់ដោយផ្ទាល់ពីទិន្នន័យឆ្នាំ២០២៥ នៃស្រុកទាំងពីរ (ក្រុងប៉ៃលិន និងស្រុកសាលាក្រៅ)។ រូបមន្តស្ថិតិ និងក្រាហ្វិកត្រូវបានធ្វើសមកាលកម្មដោយស្វ័យប្រវត្ត។
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Panel: Deep Analysis and Charts -->
+        <div class="lg:col-span-8 flex flex-col gap-8">
+            
+            <!-- SECTION 1: DEMOGRAPHICS -->
+            <section id="sec-demographics" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <div class="border-b border-slate-100 pb-4 mb-6">
+                    <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">សូចនាករទី១</span>
+                    <h2 class="khmer-moul text-lg text-blue-900 mt-1">រចនាសម្ព័ន្ធប្រជាសាស្ត្រ និងអត្រាបន្ទុក (Dependency Structure)</h2>
+                </div>
+
+                <!-- Demographic Chart Canvas -->
+                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 mb-6 relative" style="height: 320px;">
+                    <canvas id="demographicsChart"></canvas>
+                </div>
+
+                <div class="space-y-4 content-font text-sm text-slate-600">
+                    <p class="text-justify">
+                        ការវិភាគលម្អិតលើរចនាសម្ព័ន្ធអាយុរបស់ប្រជាពលរដ្ឋខេត្តប៉ៃលិន បង្ហាញឱ្យឃើញនូវការចែកចាយពីរដ៏សំខាន់៖
+                    </p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>
+                            <strong>ក្រុមមនុស្សអាយុ ០-១៧ ឆ្នាំ៖</strong> មានចំនួនសរុប <strong>៣០,០៨២ នាក់</strong> (ស្មើនឹង <strong>៣៥.៩៥%</strong>)។ ស្រុកសាលាក្រៅមានចំនួនកុមារ និងយុវវ័យខ្ពស់ជាងក្រុងប៉ៃលិនយ៉ាងច្បាស់ (១៦,៥៩៥ នាក់ ធៀបនឹង ១៣,៤៨៧ នាក់)។ នេះបង្ហាញពីសញ្ញានៃការកើនឡើងតម្រូវការផ្នែកអប់រំ និងការគាំពារកុមារនៅស្រុកសាលាក្រៅ។
+                        </li>
+                        <li>
+                            <strong>ក្រុមមនុស្សអាយុ ១៨-៦០ ឆ្នាំ (កម្លាំងពលកម្មចម្បង)៖</strong> មានចំនួនសរុប <strong>៤៣,៩៤៧ នាក់</strong> (ស្មើនឹង <strong>៥២.៥២%</strong>)។ នេះជាកម្លាំងផលិតភាពសេដ្ឋកិច្ចដ៏សំខាន់បំផុតរបស់ខេត្ត។
+                        </li>
+                        <li>
+                            <strong>ក្រុមមនុស្សចាស់អាយុចាប់ពី ៦១ ឆ្នាំឡើង៖</strong> មានចំនួនសរុប <strong>៩,៦៤០ នាក់</strong> (ស្មើនឹង <strong>១១.៥២%</strong>)។
+                        </li>
+                    </ul>
+
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-950 my-4">
+                        <p class="font-bold mb-1">រូបមន្តគណនាអត្រាបន្ទុកសង្គម (Dependency Ratio)៖</p>
+                        <p class="mb-2">អត្រាបន្ទុកសង្គម វាស់វែងពីសម្ពាធសេដ្ឋកិច្ចដែលធ្លាក់លើកម្លាំងពលកម្ម (អាយុ ១៨-៦០ ឆ្នាំ) ក្នុងការចិញ្ចឹមកូនក្មេង និងមនុស្សចាស់៖</p>
+                        <div class="bg-white p-3 rounded border border-amber-100 text-center font-mono text-sm">
+                            អត្រាបន្ទុក = ((ប្រជាជន ០-១៧ឆ្នាំ + ប្រជាជន ៦១ឆ្នាំឡើង) / ប្រជាជន ១៨-៦០ឆ្នាំ) × ១០០
+                        </div>
+                        <p class="mt-2">
+                            ការគណនាជាក់ស្តែង៖ ((៣០,០៨២ + ៩,៦៤០) / ៤៣,៩៤៧) × ១០០ = <strong>៩០.៣៨%</strong>។ មានន័យថាមនុស្សក្នុងវ័យការងារ ១០០ នាក់ ត្រូវទ្រទ្រង់សមាជិកគ្រួសារដែលមិនទាន់រកចំណូលបានចំនួន ៩០ នាក់។
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: GENDER EQUALITY -->
+            <section id="sec-gender" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <div class="border-b border-slate-100 pb-4 mb-6">
+                    <span class="text-xs font-bold text-purple-600 uppercase tracking-wider">សូចនាករទី២</span>
+                    <h2 class="khmer-moul text-lg text-blue-900 mt-1">សមភាពយេនឌ័រ និងភាពជាអ្នកដឹកនាំ (Gender Leadership GAP)</h2>
+                </div>
+
+                <!-- Gender Chart Canvas -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 relative" style="height: 250px;">
+                        <canvas id="genderCommuneChart"></canvas>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 relative" style="height: 250px;">
+                        <canvas id="genderVillageChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="space-y-4 content-font text-sm text-slate-600">
+                    <h3 class="font-bold text-slate-800">ការវិភាគស៊ីជម្រៅលើគម្លាតយេនឌ័រ៖</h3>
+                    <p class="text-justify">
+                        ការវិភាគប្រៀបធៀបរវាងកម្រិតសម្រេចចិត្តពីរថ្នាក់ (ថ្នាក់ក្រុមប្រឹក្សាឃុំសង្កាត់ និងថ្នាក់ភូមិ) បង្ហាញពីលទ្ធផលផ្ទុយគ្នាយ៉ាងគួរឱ្យចាប់អារម្មណ៍៖
+                    </p>
+                    <ul class="list-decimal pl-5 space-y-2">
+                        <li>
+                            <strong>ថ្នាក់ក្រុមប្រឹក្សាឃុំសង្កាត់ (អត្រាសរុប ៣០.៧៧%)៖</strong> ក្រុងប៉ៃលិនមានអត្រាស្ត្រីក្នុងក្រុមប្រឹក្សាខ្ពស់រហូតដល់ <strong>៣៨.៤៦%</strong> ខណៈដែលស្រុកសាលាក្រៅមានត្រឹមតែ <strong>២៣.០៨%</strong>។ នេះបង្ហាញពីតម្រូវការចាំបាច់ក្នុងការជំរុញ និងផ្តល់ការគាំទ្របន្ថែមដល់បេក្ខភាពស្ត្រីនៅតំបន់ជនបទនៃស្រុកសាលាក្រៅ។
+                        </li>
+                        <li>
+                            <strong>ថ្នាក់ដឹកនាំភូមិ (អត្រាសរុប ១៤.៤៣%)៖</strong> ក្នុងចំណោមមេភូមិសរុប ៩៧ នាក់ មានមេភូមិជាស្ត្រីត្រឹមតែ <strong>១៤ នាក់</strong> ប៉ុណ្ណោះ (ស្មើគ្នាទាំងពីរស្រុកគឺស្រុកនីមួយៗមានមេភូមិជាស្ត្រីចំនួន ៧ នាក់)។
+                        </li>
+                    </ul>
+                    <p class="text-justify italic">
+                        <strong>សេចក្តីសន្និដ្ឋានយុទ្ធសាស្ត្រ៖</strong> គោលនយោបាយរបស់ខេត្តត្រូវបង្កើនការបណ្តុះបណ្តាល និងកសាងសមត្ថភាពស្ត្រីនៅថ្នាក់មូលដ្ឋានផ្ទាល់ (ភូមិ) ដើម្បីសម្រេចឱ្យបានសូចនាករគោលដៅ ២០% នៃស្រ្តីជាមេភូមិនៅត្រឹមឆ្នាំ២០៣០។
+                    </p>
+                </div>
+            </section>
+
+            <!-- SECTION 3: ENVIRONMENTAL & DISASTER -->
+            <section id="sec-disaster" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <div class="border-b border-slate-100 pb-4 mb-6">
+                    <span class="text-xs font-bold text-red-600 uppercase tracking-wider">សូចនាករទី៣</span>
+                    <h2 class="khmer-moul text-lg text-blue-900 mt-1">មហន្តរាយធម្មជាតិ និងកម្រិតគ្របដណ្តប់សេវាបរិស្ថាន</h2>
+                </div>
+
+                <!-- Disaster Chart Canvas -->
+                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 mb-6 relative" style="height: 300px;">
+                    <canvas id="disasterServiceChart"></canvas>
+                </div>
+
+                <div class="space-y-4 content-font text-sm text-slate-600">
+                    <h3 class="font-bold text-slate-800">ការវាយតម្លៃពីផលប៉ះពាល់៖</h3>
+                    <p class="text-justify">
+                        ទិន្នន័យឆ្នាំ២០២៥ បង្ហាញពីតុល្យការផ្ទុយគ្នាយ៉ាងខ្លាំងរវាងផលប៉ះពាល់ និងលទ្ធភាពទទួលបានសេវាកម្ម៖
+                    </p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>
+                            <strong>គ្រួសាររងគ្រោះដោយមហន្តរាយ៖</strong> ក្រុងប៉ៃលិនមានគ្រួសាររងគ្រោះដោយគ្រោះធម្មជាតិ (ទឹកជំនន់ទឹកភ្លៀង និងការបាក់ដី) រហូតដល់ <strong>២៦៦ គ្រួសារ</strong> (ស្មើនឹង <strong>៦៧.៣%</strong> នៃចំនួនសរុបទូទាំងខេត្ត)។ ចំណែកឯស្រុកសាលាក្រៅមានចំនួន <strong>១២៩ គ្រួសារ</strong>។
+                        </li>
+                        <li>
+                            <strong>លទ្ធភាពទទួលបានសេវាប្រមូលសំរាម៖</strong> ក្នុងចំណោមគ្រួសារសរុបទូទាំងខេត្ត ១៩,៩៤៣ គ្រួសារ មានតែ <strong>២,៩៧៣ គ្រួសារប៉ុណ្ណោះ (១៤.៩%)</strong> ដែលទទួលបានសេវាប្រមូលសំរាមត្រឹមត្រូវ។ ក្នុងនោះ ក្រុងប៉ៃលិនមានចំនួន ១,៧៣៤ គ្រួសារ និងស្រុកសាលាក្រៅមាន ១,២៣៩ គ្រួសារ។
+                        </li>
+                    </ul>
+                    <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-xs text-red-950">
+                        <p class="font-bold mb-1"><i class="fa-solid fa-triangle-exclamation"></i> អនុសាសន៍គោលនយោបាយ៖</p>
+                        <p class="text-justify">
+                            កង្វះខាតប្រព័ន្ធប្រមូលសំរាមនៅតាមស្រុកសាលាក្រៅ នឹងជះឥទ្ធិពលអាក្រក់ខ្លាំងដល់ប្រភពទឹកធម្មជាតិ និងការរស់នៅរបស់ប្រជាពលរដ្ឋ។ ផែនការយុទ្ធសាស្ត្រឆ្នាំ២០២៥-២០៣០ ត្រូវចាត់បញ្ចូលការវិនិយោគលើប្រព័ន្ធគ្រប់គ្រងសំរាម និងការស្តារប្រឡាយទឹកការពារទឹកជំនន់ជាកិច្ចការបន្ទាន់។
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: BUDGET & IMPACT MATRIX -->
+            <section id="sec-budget" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <div class="border-b border-slate-100 pb-4 mb-6">
+                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">សូចនាករទី៤</span>
+                    <h2 class="khmer-moul text-lg text-blue-900 mt-1">ម៉ាទ្រីសវិភាគប្រសិទ្ធភាពថវិកា និងកម្មវិធីវិនិយោគអាទិភាព</h2>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs md:text-sm content-font mb-6">
+                        <thead>
+                            <tr class="bg-slate-900 text-white font-semibold">
+                                <th class="p-3 border border-slate-800 rounded-tl-lg">វិស័យអាទិភាព</th>
+                                <th class="p-3 border border-slate-800">សូចនាករគោលដៅ (២០៣០)</th>
+                                <th class="p-3 border border-slate-800">ផែនការសកម្មភាពជាក់ស្តែង</th>
+                                <th class="p-3 border border-slate-800 rounded-tr-lg">ថវិកាគ្រឿងផ្សំ</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            <tr>
+                                <td class="p-3 border font-semibold text-blue-950">១. កសិឧស្សាហកម្ម</td>
+                                <td class="p-3 border">បង្កើតរោងចក្រកែច្នៃកសិផលធំៗចំនួន ៣ ក្នុងខេត្ត</td>
+                                <td class="p-3 border">ទាក់ទាញការវិនិយោគសាងសង់រោងចក្រកែច្នៃផ្លែមៀន និងដំឡូងមីស្ងួត</td>
+                                <td class="p-3 border text-amber-600 font-bold">$១.៥ លានដុល្លារ</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border font-semibold text-blue-950">២. អភិវឌ្ឍន៍ធនធានទឹក</td>
+                                <td class="p-3 border">បង្កើនផ្ទៃដីស្រោចស្រពឱ្យបានកើនឡើង ២០%</td>
+                                <td class="p-3 border">សាងសង់ និងស្តារឡើងវិញនូវប្រឡាយទឹកខ្នាតតូច និងមធ្យមនៅសាលាក្រៅ</td>
+                                <td class="p-3 border text-amber-600 font-bold">$៨០០,០០០</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border font-semibold text-blue-950">៣. បរិស្ថាន និងកាកសំណល់</td>
+                                <td class="p-3 border">ពង្រីកសេវាប្រមូលសំរាមឱ្យគ្របដណ្តប់បាន ៤០%</td>
+                                <td class="p-3 border">សហការជាមួយក្រុមហ៊ុនឯកជនពង្រីកបណ្តាញប្រមូលសំរាមដល់ទីប្រជុំជនស្រុក</td>
+                                <td class="p-3 border text-amber-600 font-bold">$៣០០,០០០</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border font-semibold text-blue-950">៤. បញ្ជ្រាបយេនឌ័រ</td>
+                                <td class="p-3 border">អត្រាមេភូមិជាស្ត្រីកើនឡើងដល់ ២០%</td>
+                                <td class="p-3 border">ផ្តល់វគ្គបណ្តុះបណ្តាលសមត្ថភាពភាពជាអ្នកដឹកនាំដល់ស្ត្រីនៅថ្នាក់មូលដ្ឋាន</td>
+                                <td class="p-3 border text-amber-600 font-bold">$១៥០,០០០</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-5">
+                    <h4 class="font-bold text-slate-800 text-sm mb-2"><i class="fa-solid fa-award"></i> ទស្សនៈយុទ្ធសាស្ត្ររួម៖</h4>
+                    <p class="text-xs text-slate-600 leading-relaxed text-justify">
+                        ការបែងចែកធនធានថវិកាត្រូវតែដើរទន្ទឹមគ្នាជាមួយសូចនាករជាក់ស្តែង។ វិស័យកសិឧស្សាហកម្ម និងធនធានទឹក ទទួលបានចំណែកថវិកាច្រើនជាងគេ ដោយសារវាជាសសរទ្រូងដ៏ចម្បងក្នុងការជួយដោះស្រាយជីវភាពរបស់កម្លាំងពលកម្ម (៥២.៥% នៃប្រជាជនសរុប) ព្រមទាំងជួយលើកកម្ពស់សេដ្ឋកិច្ចខេត្តទាំងមូលឱ្យមានការលូតលាស់ប្រកបដោយចីរភាព និងសមធម៌។
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Word Export Hidden Document Source -->
+    <div id="word-template" class="hidden">
+        <div style="font-family: 'Khmer OS Battambang', 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #1e293b;">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <p style="font-size: 16px; font-weight: bold; margin: 0;">ព្រះរាជាណាចក្រកម្ពុជា</p>
+                <p style="font-size: 16px; font-weight: bold; margin: 5px 0 25px 0;">ជាតិ សាសនា ព្រះមហាក្សត្រ</p>
+                <div style="width: 120px; height: 1.5px; background-color: #f59e0b; margin: 0 auto 30px auto;"></div>
+                <h2 style="font-size: 18px; color: #1e3a8a; margin: 0;">រដ្ឋបាលខេត្តប៉ៃលិន</h2>
+                <h1 style="font-size: 24px; font-weight: bold; color: #1e3a8a; margin: 15px 0;">របាយការណ៍វិភាគស៊ីជម្រៅលើសូចនាករគន្លឹះ (KPIs)<br>ផែនការយុទ្ធសាស្ត្រអភិវឌ្ឍន៍ខេត្តប៉ៃលិន (២០២៥-២០៣០)</h1>
+            </div>
+
+            <h2 style="font-size: 14pt; color: #1e3a8a; border-bottom: 2px solid #1e3a8a; padding-bottom: 5px; margin-top: 30px;">១. រចនាសម្ព័ន្ធប្រជាសាស្ត្រ និងអត្រាបន្ទុកសង្គម</h2>
+            <p style="font-size: 11pt; text-align: justify; text-indent: 1.5cm;">
+                យោងតាមទិន្នន័យស្ថិតិឆ្នាំ២០២៥ ខេត្តប៉ៃលិនមានប្រជាជនសរុបចំនួន ៨៣,៦៦៩ នាក់ ដែលក្នុងនោះមានបុរសចំនួន ៤២,០៤១ នាក់ និងស្ត្រីចំនួន ៤១,៦២៨ នាក់។ ក្រុមប្រជាជនដែលមានអាយុចន្លោះពី ០-១៧ ឆ្នាំមានចំនួន ៣០,០៨២ នាក់ (៣៥.៩៥%) និងប្រជាជនវ័យចាស់ចាប់ពី ៦១ ឆ្នាំឡើងមានចំនួន ៩,៦៤០ នាក់ (១១.៥២%)។
+            </p>
+            <p style="font-size: 11pt; text-align: justify; text-indent: 1.5cm;">
+                ការគណនាអត្រាបន្ទុកសង្គម (Dependency Ratio) គឺស្ថិតនៅក្នុងកម្រិត <strong>៩០.៣៨%</strong> ដែលនេះមានន័យថាកម្លាំងពលកម្ម ១០០ នាក់ត្រូវទ្រទ្រង់សមាជិកគ្រួសារដែលមិនទាន់អាចរកចំណូលបានចំនួនប្រមាណ ៩០ នាក់។
+            </p>
+
+            <h2 style="font-size: 14pt; color: #1e3a8a; border-bottom: 2px solid #1e3a8a; padding-bottom: 5px; margin-top: 30px;">២. សមភាពយេនឌ័រ និងការចូលរួមក្នុងកម្រិតសម្រេចចិត្ត</h2>
+            <p style="font-size: 11pt; text-align: justify; text-indent: 1.5cm;">
+                សមាមាត្រស្ត្រីជាសមាជិកក្រុមប្រឹក្សាឃុំសង្កាត់ទូទាំងខេត្តមានចំនួន ៣០.៧៧% ដែលក្នុងនោះក្រុងប៉ៃលិនមានអត្រាខ្ពស់ជាងគេគឺរហូតដល់ ៣៨.៤៦% ខណៈស្រុកសាលាក្រៅមានត្រឹមតែ ២៣.០៨%។ ទោះជាយ៉ាងនេះក្តី អត្រាស្ត្រីជាមេភូមិនៅមានកម្រិតទាបនៅឡើយគឺមានត្រឹមតែ ១៤.៤៣% (ស្មើនឹង ១៤ នាក់ក្នុងចំណោមមេភូមិសរុប ៩៧ នាក់)។
+            </p>
+
+            <h2 style="font-size: 14pt; color: #1e3a8a; border-bottom: 2px solid #1e3a8a; padding-bottom: 5px; margin-top: 30px;">៣. មហន្តរាយធម្មជាតិ និងសេវាកម្មបរិស្ថាន</h2>
+            <p style="font-size: 11pt; text-align: justify; text-indent: 1.5cm;">
+                នៅក្នុងឆ្នាំ២០២៥ ក្រុងប៉ៃលិនរងផលប៉ះពាល់ខ្លាំងជាងគេដោយសារមហន្តរាយធម្មជាតិ ដោយមានគ្រួសាររងគ្រោះរហូតដល់ ២៦៦ គ្រួសារ (៦៧.៣%) ធៀបនឹងស្រុកសាលាក្រៅដែលមាន ១២៩ គ្រួសារ (៣២.៧%)។ ដោយឡែកសេវាកម្មប្រមូលសំរាមនៅទូទាំងខេត្តប៉ៃលិនគ្របដណ្តប់បានត្រឹមតែ ១៤.៩% ប៉ុណ្ណោះ ដែលនេះជាចំណុចខ្វះខាតដែលត្រូវដោះស្រាយជាបន្ទាន់ក្នុងផែនការប្រាំឆ្នាំខាងមុខ។
+            </p>
+
+            <h2 style="font-size: 14pt; color: #1e3a8a; border-bottom: 2px solid #1e3a8a; padding-bottom: 5px; margin-top: 30px;">៤. ផែនការវិនិយោគ និងកម្មវិធីអាទិភាព (២០២៥-២០៣០)</h2>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <thead>
+                    <tr style="background-color: #1e3a8a; color: white;">
+                        <th style="border: 1px solid #94a3b8; padding: 10px; font-size: 11pt; text-align: left;">វិស័យអាទិភាព</th>
+                        <th style="border: 1px solid #94a3b8; padding: 10px; font-size: 11pt; text-align: left;">សូចនាករគោលដៅ</th>
+                        <th style="border: 1px solid #94a3b8; padding: 10px; font-size: 11pt; text-align: left;">ផែនការសកម្មភាព</th>
+                        <th style="border: 1px solid #94a3b8; padding: 10px; font-size: 11pt; text-align: left;">ថវិកា</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #cbd5e1; padding: 8px; font-size: 10pt;">កសិឧស្សាហកម្ម</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 8px; font-size: 10pt;">បង្កើតរោងចក្រកែច្នៃ ៣ កន្លែង</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 8px; font-size: 10pt;">ទាក់ទាញវិនិយោគសាងសង់រោងចក្រកែច្នៃផ្លែមៀន</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 8px; font-size: 10pt; font-weight: bold;">$១,៥០០,០០០</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #cbd5e1; padding: 8px; font-size: 10pt;">អភិវឌ្ឍន៍ធនធានទឹក</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 8px; font-size: 10pt;">បង្កើនផ្ទៃដីស្រោចស្រព ២០%</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 8px; font-size: 10pt;">សាងសង់ និងស្តារប្រឡាយទឹកនៅសាលាក្រៅ</td>
+                        <td style="border: 1px solid #cbd5e1; padding: 8px; font-size: 10pt; font-weight: bold;">$៨០០,០០០</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer of App -->
+    <footer class="bg-slate-900 text-slate-400 text-center py-6 border-t border-slate-800 text-xs">
+        <p class="khmer-moul text-amber-500 mb-1 text-sm">ប្រព័ន្ធគ្រប់គ្រងយុទ្ធសាស្ត្រខេត្តប៉ៃលិន</p>
+        <p class="content-font">រក្សាសិទ្ធិគ្រប់យ៉ាង © ២០២៦ រដ្ឋបាលខេត្តប៉ៃលិន និងមន្ទីរផែនការខេត្ត</p>
+    </footer>
+
+    <!-- Chart Engine and Navigation Logic -->
+    <script>
+        // Track Chart instances (Clean-up logic)
+        let demographicsChartInstance = null;
+        let genderCommuneChartInstance = null;
+        let genderVillageChartInstance = null;
+        let disasterChartInstance = null;
+
+        // Cleanup mechanism to prevent canvas overlapping and memory leaks
+        function destroyAllCharts() {
+            if (demographicsChartInstance) demographicsChartInstance.destroy();
+            if (genderCommuneChartInstance) genderCommuneChartInstance.destroy();
+            if (genderVillageChartInstance) genderVillageChartInstance.destroy();
+            if (disasterChartInstance) disasterChartInstance.destroy();
+        }
+
+        // 1. Render Demographics Chart
+        function renderDemographics() {
+            const ctx = document.getElementById('demographicsChart');
+            if (!ctx) return;
+
+            if (demographicsChartInstance) demographicsChartInstance.destroy();
+
+            demographicsChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['ក្រុងប៉ៃលិន', 'ស្រុកសាលាក្រៅ'],
+                    datasets: [
+                        {
+                            label: 'អាយុ ០-១៧ (កុមារ/យុវវ័យ)',
+                            data: [13487, 16595],
+                            backgroundColor: '#60a5fa',
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'អាយុ ១៨-៦០ (កម្លាំងពលកម្ម)',
+                            data: [21244, 22703],
+                            backgroundColor: '#34d399',
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'អាយុ ៦១+ (មនុស្សចាស់)',
+                            data: [4683, 4957],
+                            backgroundColor: '#f87171',
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { font: { family: 'Siemreap', size: 11 } } },
+                        title: { display: true, text: 'រចនាសម្ព័ន្ធអាយុរបស់ប្រជាពលរដ្ឋតាមស្រុក-ក្រុង (២០២៥)', font: { family: 'Siemreap', size: 12 } }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { font: { family: 'Siemreap' } } },
+                        x: { ticks: { font: { family: 'Siemreap' } } }
+                    }
+                }
+            });
+        }
+
+        // 2. Render Gender Charts
+        function renderGenderCharts() {
+            const ctxCommune = document.getElementById('genderCommuneChart');
+            const ctxVillage = document.getElementById('genderVillageChart');
+
+            if (ctxCommune) {
+                if (genderCommuneChartInstance) genderCommuneChartInstance.destroy();
+                genderCommuneChartInstance = new Chart(ctxCommune, {
+                    type: 'bar',
+                    data: {
+                        labels: ['ក្រុងប៉ៃលិន', 'ស្រុកសាលាក្រៅ', 'មធ្យមភាគខេត្ត'],
+                        datasets: [{
+                            label: 'សមាជិកក្រុមប្រឹក្សាឃុំជាស្ត្រី (%)',
+                            data: [38.46, 23.08, 30.77],
+                            backgroundColor: '#c084fc',
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            title: { display: true, text: '% ស្រ្តីជាសមាជិកក្រុមប្រឹក្សាឃុំ-សង្កាត់', font: { family: 'Siemreap', size: 12 } }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, max: 100, ticks: { font: { family: 'Siemreap' } } },
+                            x: { ticks: { font: { family: 'Siemreap' } } }
+                        }
+                    }
+                });
+            }
+
+            if (ctxVillage) {
+                if (genderVillageChartInstance) genderVillageChartInstance.destroy();
+                genderVillageChartInstance = new Chart(ctxVillage, {
+                    type: 'pie',
+                    data: {
+                        labels: ['មេភូមិជាបុរស (៨៣ នាក់)', 'មេភូមិជាស្ត្រី (១៤ នាក់)'],
+                        datasets: [{
+                            data: [85.57, 14.43],
+                            backgroundColor: ['#94a3b8', '#fbbf24']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { font: { family: 'Siemreap', size: 11 } } },
+                            title: { display: true, text: 'សមាមាត្រតំណែងមេភូមិទូទាំងខេត្ត', font: { family: 'Siemreap', size: 12 } }
+                        }
+                    }
+                });
+            }
+        }
+
+        // 3. Render Environmental & Disaster Chart
+        function renderDisasterChart() {
+            const ctx = document.getElementById('disasterServiceChart');
+            if (!ctx) return;
+
+            if (disasterChartInstance) disasterChartInstance.destroy();
+
+            disasterChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['ក្រុងប៉ៃលិន', 'ស្រុកសាលាក្រៅ'],
+                    datasets: [
+                        {
+                            label: 'គ្រួសាររងគ្រោះដោយមហន្តរាយ (គ្រួសារ)',
+                            data: [266, 129],
+                            backgroundColor: '#f87171',
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'គ្រួសារទទួលបានសេវាប្រមូលសំរាម (គ្រួសារ)',
+                            data: [1734, 1239],
+                            backgroundColor: '#10b981',
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { font: { family: 'Siemreap', size: 11 } } },
+                        title: { display: true, text: 'ប្រៀបធៀបផលប៉ះពាល់ និងសេវាគ្រប់គ្រងសំណល់', font: { family: 'Siemreap', size: 12 } }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { font: { family: 'Siemreap' } } },
+                        x: { ticks: { font: { family: 'Siemreap' } } }
+                    }
+                }
+            });
+        }
+
+        // Smooth scroll controller
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // EXPORT MS-WORD REPORT (.doc)
+        function exportFullReport() {
+            const content = document.getElementById('word-template').innerHTML;
+            const fullHtml = `
+                <html xmlns:o="urn:schemas-microsoft-com:office:office" 
+                      xmlns:w="urn:schemas-microsoft-com:office:word" 
+                      xmlns="http://www.w3.org/TR/REC-html40">
+                <head>
+                    <meta charset="utf-8">
+                    <title>Strategic KPIs Deep Analysis Pailin 2025</title>
+                    <style>
+                        @page {
+                            size: 21cm 29.7cm; /* A4 size */
+                            margin: 2.54cm 2.54cm 2.54cm 2.54cm;
+                        }
+                        body {
+                            font-family: 'Khmer OS Battambang', 'Segoe UI', sans-serif;
+                            font-size: 11pt;
+                            line-height: 1.6;
+                            color: #1e293b;
+                        }
+                        h1 {
+                            font-family: 'Khmer OS Muol Light', sans-serif;
+                            font-size: 18pt;
+                            color: #1e3a8a;
+                            text-align: center;
+                            margin-bottom: 15px;
+                        }
+                        h2 {
+                            font-family: 'Khmer OS Muol Light', sans-serif;
+                            font-size: 13pt;
+                            color: #1e3a8a;
+                            border-bottom: 1.5px solid #1e3a8a;
+                            padding-bottom: 4px;
+                            margin-top: 25px;
+                        }
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin: 15px 0;
+                        }
+                        th {
+                            background-color: #1e3a8a;
+                            color: #ffffff;
+                            border: 1px solid #cbd5e1;
+                            padding: 8px;
+                            font-size: 10pt;
+                        }
+                        td {
+                            border: 1px solid #cbd5e1;
+                            padding: 8px;
+                            font-size: 10pt;
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${content}
+                </body>
+                </html>
+            `;
+
+            const blob = new Blob(['\ufeff' + fullHtml], {
+                type: 'application/msword;charset=utf-8'
+            });
+
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'របាយការណ៍វិភាគស៊ីជម្រៅសូចនាករគន្លឹះខេត្តប៉ៃលិន_២០២៥_២០៣០.doc';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Launch all charts on window initialization
+        window.onload = function() {
+            destroyAllCharts();
+            renderDemographics();
+            renderGenderCharts();
+            renderDisasterChart();
+        };
+    </script>
+</body>
+</html>
